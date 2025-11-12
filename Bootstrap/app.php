@@ -12,7 +12,8 @@ function routes($paths)
         require_once $path;
     }
 }
-function route($path, $parameters = []){
-    require  ROOT_DIR."/resources/view".$path.".php";
+function route($path, $arResult = []){
+   require_once ROOT_DIR."/resources/view".$path.".php";
 }
+
 routes($appConf);

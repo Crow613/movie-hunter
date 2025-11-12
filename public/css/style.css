@@ -8,7 +8,7 @@ body {
 	line-height:1.3;
 	font-family:Arial, Helvetica, Sans-Serif;
 	color:#ccc;
-	background:url('images/body-bg.gif');
+	background:url('../images/body-bg.gif');
 }
 a {
 	color:#e7b038;
@@ -83,7 +83,7 @@ h1#logo a {
 	float:left;
 	width:239px;
 	height:49px;
-	background:url('images/logo.gif') no-repeat 0 0;
+	background:url('../images/logo.gif') no-repeat 0 0;
 	font-size:0;
 	line-height:0;
 	text-indent:-4000px;
@@ -115,7 +115,7 @@ h1#logo a {
 	display:inline;
 	width:16px;
 	height:16px;
-	background:url('images/social.gif') no-repeat 0 0;
+	background:url('../images/social.gif') no-repeat 0 0;
 	font-size:0;
 	line-height:0;
 	text-indent:-4000px;
@@ -253,7 +253,7 @@ h1#logo a {
 	left:0;
 	width:152px;
 	height:214px;
-	background:url('images/image-hover.png');
+	background:url('../images/image-hover.png');
 	display:block;
 	z-index:5;
 	cursor:pointer;
@@ -285,13 +285,13 @@ h1#logo a {
 	float:left;
 	width:60px;
 	height:11px;
-	background:url('images/stars.gif') no-repeat 0 0;
+	background:url('../images/stars.gif') no-repeat 0 0;
 	margin-left:2px;
 }
 .rating .stars-in {
 	width:48px;
 	display:inline;
-	background:url('images/stars.gif') no-repeat 0 bottom;
+	background:url('../images/stars.gif') no-repeat 0 bottom;
 	position:absolute;
 	height:11px;
 	font-size:0;
@@ -299,7 +299,7 @@ h1#logo a {
 	text-indent:-4000px;
 }
 .comments {
-	background:url('images/comments.gif') no-repeat 0 center;
+	background:url('../images/comments.gif') no-repeat 0 center;
 	padding-left:12px;
 	float:right;
 }

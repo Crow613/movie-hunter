@@ -9,32 +9,11 @@ class Model extends Databace
 {
     public static string $tableName;
 
-    /**
-     * @param  string  $column
-     * @param  string  $operator
-     * @param  mixed  $value
-     * @return $this
-     */
-    public function where(string $column, string $operator, mixed $value): static
-    {
-        $this->where[] =[$column,$operator,$value];
-        return $this;
-    }
-
-    /**
-     * @param  string|array|false  $columns
-     * @return $this
-     */
-    public function select(string|array|false $columns = false): static
-    {
-         $columns ?? $this->select[] = $columns;
-        return $this;
-    }
     public static function all()
     {
         $pdo = self::connection();
-        $sql = " SELECT * FROM ".self::$tableName;
-        return $pdo->query($sql)->fetchAll(Pdo::FETCH_ASSOC);
+        $sql = " SELECT * FROM ".static::$tableName;
+        return $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
     }
 
     /**

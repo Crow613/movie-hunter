@@ -1,6 +1,12 @@
 {
-
+    "autoload": {
+        "psr-4": {
+            "Core\\": "core",
+            "App\\": "app"
+        }
+    },
     "require": {
-        "symfony/var-dumper": "^7.2"
+        "symfony/var-dumper": "^7.2",
+        "symfony/dotenv": "^7.3"
     }
 }

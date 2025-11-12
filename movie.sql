@@ -1,0 +1,98 @@
+SET NAMES utf8mb4;
+SET FOREIGN_KEY_CHECKS = 0;
+
+CREATE TABLE IF NOT EXISTS producers (
+
+    id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    image VARCHAR(1024) NULL,
+    name VARCHAR(191) NOT NULL,
+    bio TEXT NULL,
+    created_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    UNIQUE KEY ux_producers_name (name)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS directors (
+
+    id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    image VARCHAR(1024) NULL,
+    name VARCHAR(191) NOT NULL,
+    bio TEXT NULL,
+    created_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    UNIQUE KEY ux_directors_name (name)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS actors (
+
+    id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    image VARCHAR(1024) NULL,
+    name VARCHAR(191) NOT NULL,
+    bio TEXT NULL,
+    created_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    UNIQUE KEY ux_actors_name (name)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS movies (
+
+    id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    image VARCHAR(1024) NULL,
+    name VARCHAR(255) NOT NULL,
+    movie_link VARCHAR(1024) NULL,
+    rating DECIMAL(3,1) NULL DEFAULT 0.0,
+    producer_id BIGINT UNSIGNED NULL,
+    director_id BIGINT UNSIGNED NULL,
+    created_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    INDEX idx_movies_name (name),
+    INDEX idx_movies_producer (producer_id),
+    INDEX idx_movies_director (director_id),
+    CONSTRAINT fk_movies_producer FOREIGN KEY (producer_id) REFERENCES producers(id)
+    ON DELETE SET NULL ON UPDATE CASCADE,
+    CONSTRAINT fk_movies_director FOREIGN KEY (director_id) REFERENCES directors(id)
+    ON DELETE SET NULL ON UPDATE CASCADE
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS movie_actor (
+
+    movie_id BIGINT UNSIGNED NOT NULL,
+    actor_id BIGINT UNSIGNED NOT NULL,
+    PRIMARY KEY (movie_id, actor_id),
+    INDEX idx_ma_actor (actor_id),
+    CONSTRAINT fk_ma_movie FOREIGN KEY (movie_id) REFERENCES movies(id)
+    ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT fk_ma_actor FOREIGN KEY (actor_id) REFERENCES actors(id)
+    ON DELETE CASCADE ON UPDATE CASCADE
+
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS movie_producer (
+
+    movie_id BIGINT UNSIGNED NOT NULL,
+    producer_id BIGINT UNSIGNED NOT NULL,
+    PRIMARY KEY (movie_id, producer_id),
+    INDEX idx_mp_producer (producer_id),
+    CONSTRAINT fk_mp_movie
+    FOREIGN KEY (movie_id) REFERENCES movies(id)
+    ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT fk_mp_producer
+    FOREIGN KEY (producer_id) REFERENCES producers(id)
+    ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS movie_director (
+
+     movie_id BIGINT UNSIGNED NOT NULL,
+     director_id BIGINT UNSIGNED NOT NULL,
+     PRIMARY KEY (movie_id, director_id),
+     INDEX idx_md_director (director_id),
+     CONSTRAINT fk_md_movie
+     FOREIGN KEY (movie_id) REFERENCES movies(id)
+     ON DELETE CASCADE ON UPDATE CASCADE,
+     CONSTRAINT fk_md_director
+     FOREIGN KEY (director_id) REFERENCES directors(id)
+     ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+SET FOREIGN_KEY_CHECKS = 1;

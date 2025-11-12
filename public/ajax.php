@@ -8,7 +8,7 @@ $data = $_GET['data']??[];
 if (method_exists($className, $method)) {
     $class = new $className();
     if (isset($data)){
-      echo json_encode($class->$method());
+      echo json_encode($class->$method($data));
       die();
     }
     echo json_encode($class->$method());

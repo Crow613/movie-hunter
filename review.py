@@ -50,7 +50,7 @@ parser.add_argument(
     help="Расширения файлов для анализа"
 )
 parser.add_argument(
-    "--exclude_dirs", nargs="+", default=[".git", "node_modules", "venv"],
+    "--exclude_dirs", nargs="+", default=[".git", "node_modules", "venv", "vendor", "_docker"],
     help="Директории для исключения"
 )
 parser.add_argument("--max_tokens", type=int, default=4000, help="Максимальная длина кода для LLM")

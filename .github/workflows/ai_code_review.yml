@@ -1,0 +1,53 @@
+name: AI Code Review V 0.0.1
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+  workflow_dispatch:
+jobs:
+  review:
+    name: Run AI Code Review
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run AI Review
+        env:
+          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+        run: |
+          python review.py --project_dir="./" \
+                                        --extensions ".py" ".js" ".php" ".vue" ".html" ".css" \
+                                        --output="review_results.txt"
+
+      - name: Comment PR with AI Review
+        if: github.event_name == 'pull_request'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python - <<'EOF'
+          import os
+          from github import Github
+
+          repo = Github(os.environ["GITHUB_TOKEN"]).get_repo(os.environ["GITHUB_REPOSITORY"])
+          pr_number = int(os.environ["GITHUB_REF"].split('/')[-1])
+          pr = repo.get_pull(pr_number)
+
+          with open("review_results.txt", "r", encoding="utf-8") as f:
+              review_text = f.read()
+
+          review_text = review_text[:65000]
+          pr.create_issue_comment(f"🤖 **AI Code Review Results**:\n\n{review_text}")
+          EOF

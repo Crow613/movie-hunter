@@ -1,5 +1,5 @@
 
-google-generativeai==0.8.5
+google-generativeai==0.8.6
 PyGithub>=1.55
 python-dotenv>=1.0.0
 tqdm>=4.66.1

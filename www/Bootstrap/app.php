@@ -1,5 +1,5 @@
 <?php
-
+require __DIR__ . '/../vendor/autoload.php';
 define("ROOT_DIR", dirname(__dir__));
 
 $appConf = [

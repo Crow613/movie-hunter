@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Model\movie;
+use App\Model\Movie;
 
 class MovieApiController
 {
-
     /**
      * @param array $data
      * @return array
@@ -22,24 +21,24 @@ class MovieApiController
     {
         $name = $data['name'] ?? "";
 
-        return (new movie())->findMovieByName($name);
+        return (new Movie())->findMovieByName($name);
     }
     public static function getTop( array $data = []): array
     {
         $limit = $data["limit"] ?? 6;
         $sort = $data["sort"] ?? 'DESC';
-        return  (new movie())->getOrderBy("rating", $sort, $limit) ?? [];
+        return  (new Movie())->getOrderBy("rating", $sort, $limit) ?? [];
 
     }
 
     public static function getMoviesById($id): array
     {
-        return (new movie())->getMovieById($id);
+        return (new Movie())->getMovieById($id);
     }
     public static function getMostCommented()
     {
         $limit = $data["limit"] ?? 6;
         $sort = $data["sort"] ?? 'DESC';
-        return  (new movie())->getOrderBy("rating", $sort, $limit) ?? [];
+        return  (new Movie())->getOrderBy("rating", $sort, $limit) ?? [];
     }
 }

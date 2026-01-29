@@ -4,7 +4,6 @@ services:
     volumes:
       - ./www:/var/www
       - ./etc/nginx/conf.d:/etc/nginx/conf.d
-      - ./tmp:/tmp
     ports:
       - "80:80"
     depends_on:
@@ -13,19 +12,21 @@ services:
     image: crow613/php-image-min:latest
     volumes:
       - ./www:/var/www
-      - ./tmp:/tmp
     depends_on:
       - db
   db:
     image: mysql:latest
     restart: always
     volumes:
-      - ./tmp/db:/var/lib/mysql
+      - db-data:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: dbname
-      MYSQL_USER: user
+      MYSQL_DATABASE: movie
+      MYSQL_USER: movieuser
       MYSQL_PASSWORD: secret
     ports:
       - "3306:3306"
-    command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+
+volumes:
+  db-data:
